@@ -1,0 +1,4 @@
+
+viam-sdk
+pyinstaller
+google-api-python-client
