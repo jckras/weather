@@ -1,7 +1,11 @@
-from typing import ClassVar, Mapping, Sequence, Any, Dict, Optional, Tuple, Final, List, cast
-from typing_extensions import Self
+import time
+import asyncio
+import openmeteo_requests
+import requests_cache
 
-from typing import Any, Final, Mapping, Optional
+from typing import ClassVar, Mapping, Optional, Any
+from typing_extensions import Self
+from retry_requests import retry
 
 
 from viam.utils import SensorReading
@@ -9,15 +13,15 @@ from viam.utils import SensorReading
 
 from viam.module.types import Reconfigurable
 from viam.proto.app.robot import ComponentConfig
-from viam.proto.common import ResourceName, Vector3
+from viam.proto.common import ResourceName
 from viam.resource.base import ResourceBase
 from viam.resource.types import Model, ModelFamily
 
-from sensor_python import Sensor
+from viam.components.sensor import Sensor
 from viam.logging import getLogger
+from viam.utils import struct_to_dict
 
-import time
-import asyncio
+
 
 LOGGER = getLogger(__name__)
 
@@ -37,9 +41,9 @@ class meteo_PM(Sensor, Reconfigurable):
     # Constructor
     @classmethod
     def new(cls, config: ComponentConfig, dependencies: Mapping[ResourceName, ResourceBase]) -> Self:
-        my_class = cls(config.name)
-        my_class.reconfigure(config, dependencies)
-        return my_class
+        my_sensor = cls(config.name)
+        my_sensor.reconfigure(config, dependencies)
+        return my_sensor
 
     # Validates JSON Configuration
     @classmethod

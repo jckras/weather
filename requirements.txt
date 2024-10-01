@@ -2,3 +2,6 @@
 viam-sdk
 pyinstaller
 google-api-python-client
+openmeteo_requests
+requests-cache
+retry_requests

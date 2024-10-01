@@ -3,11 +3,9 @@ import sys
 
 from viam.module.module import Module
 from viam.components.sensor import Sensor
-from .meteo_PM import meteo_PM
-
+from meteo_PM import meteo_PM
 
 from viam.resource.registry import Registry, ResourceCreatorRegistration
-
 
 async def main():
     """This function creates and starts a new module, after adding all desired resources.
